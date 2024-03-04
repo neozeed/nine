@@ -1,30 +1,32 @@
 # -DLX_LEGACY
-ARCH = 
+ARCH = -m64 
 DEFINES = -DDEBUG -DHAVE_NCURSESW_NCURSES_H -D_FILE_OFFSET_BITS=64
-#CFLAGS =  -fPIC -O0 -std=c99 -Wall -ggdb3 -Iinclude 
-CFLAGS =  -Os -Wall -std=gnu99 -pedantic -nostdlib -fomit-frame-pointer -fno-stack-protector -fno-unwind-tables \
-	  -fno-asynchronous-unwind-tables -fno-unroll-loops -fmerge-all-constants -fno-ident -ffunction-sections \
-	  -fdata-sections -Iinclude
+CFLAGS =  -fPIC -O0 -std=c99 -Wall -ggdb3 -Iinclude 
+#CFLAGS =  -O0 -ggdb3 -Wall -std=gnu99 -pedantic -nostdlib -fomit-frame-pointer -fno-stack-protector -fno-unwind-tables \
+#	  -fno-asynchronous-unwind-tables -fno-unroll-loops -fmerge-all-constants -fno-ident -ffunction-sections \
+#	  -fdata-sections -Iinclude
 
-CC = i586-linux-gcc $(ARCH)
+#CC = i586-linux-gcc
+CC = gcc $(ARCH)
 
 DLLDIR = dll/
 
 DLLS =	$(DLLDIR)lib2ine.so $(DLLDIR)doscalls.so \
 	$(DLLDIR)msg.so $(DLLDIR)nls.so $(DLLDIR)quecalls.so
 
-all: $(DLLS) hello32
+all: $(DLLS) hello64
 	echo "tada"
 
 hello32: $(DLLS)
 	$(CC) -c start32.c
-	$(CC) -c -Iinclude hello.c
-	i586-linux-ld --as-needed -dynamic-linker /lib/ld-linux.so.2  -pie -m elf_i386 -rpath dll start32.o hello.o dll/msg.so dll/lib2ine.so -o hello32
+	$(CC) -c -ggdb3 -O0 -Iinclude hello.c
+#	i586-linux-ld --as-needed -dynamic-linker /lib/ld-linux.so.2  -pie -m elf_i386 -rpath dll start32.o hello.o dll/msg.so dll/lib2ine.so -o hello32
+	i586-linux-ld --as-needed -dynamic-linker /lib/ld-linux.so.2  -pie -m elf_i386 -rpath dll rt0/00_start.o rt0/syscall.o hello.o rt0/_exit.o  dll/msg.so dll/lib2ine.so -o hello32
 
 hello64: $(DLLS)
 	$(CC) -c start.c
 	$(CC) -c -Iinclude hello.c
-	ld --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie start32.o hello.o -o hello64 \
+	ld --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie start.o hello.o -o hello64 \
 	-rpath dll dll/msg.so dll/lib2ine.so
 #	$(CC) -o hello hello.o -Wl,-rpath,dll dll/msg.so  dll/lib2ine.so
 
@@ -66,7 +68,7 @@ $(DLLDIR)quecalls.so: quecalls/quecalls.o
 
 clean:
 	@rm -f $(DLLS)
-	@rm -f hello hello.o start.o
+	@rm -f hello32 hello64 hello.o start.o start32.o
 	@rm -f testtls testtls.o
 	@rm -f doscalls/doscalls.o lib2ine/lib2ine.o msg/msg.o
 	@rm -f nls/nls.o quecalls/quecalls.o

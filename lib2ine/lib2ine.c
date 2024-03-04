@@ -181,6 +181,8 @@ static void initPib(void)
         fprintf(stderr, "Out of memory\n");
         abort();
     } // if
+#else
+    env=malloc(0x10000);
 #endif
 
     const char *libpath = NULL;
