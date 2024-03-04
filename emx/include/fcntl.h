@@ -10,6 +10,9 @@
 #define O_CREAT         0x100
 #define O_TRUNC         0x200
 #define O_EXCL          0x400
+/* from 0.8c	*/
+#define O_ACCMODE       0x03    /* mask */
+#define O_NDELAY        0x04
 #endif
 
 #if !defined (F_OK)

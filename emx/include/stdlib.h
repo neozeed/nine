@@ -70,7 +70,8 @@ void *bsearch (const void *key, const void *base, size_t num, size_t width,
 void *calloc (size_t elements, size_t size);
 int chdir (const char *name);
 div_t div (int num, int den);
-void volatile exit (int ret);
+/* GCC 4 doesnt like this void volatile exit (int ret); */
+void exit (int ret);
 void free (void *mem);
 char *getcwd (char *buffer, int size);
 char *getenv (const char *name);
