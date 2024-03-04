@@ -1,5 +1,13 @@
 /* sys/types.h (emx/gcc) */
 
+#if !defined (_SYS_TYPES_H)
+#define _SYS_TYPES_H
+
+#if !defined (_SIZE_T_DEFINED)
+#define _SIZE_T_DEFINED
+typedef unsigned long size_t;
+#endif
+
 #if !defined (_TIME_T_DEFINED)
 #define _TIME_T_DEFINED
 typedef long time_t;
@@ -19,3 +27,5 @@ typedef short dev_t;
 #define _OFF_T_DEFINED
 typedef long off_t;
 #endif
+
+#endif /* !defined (_SYS_TYPES_H) */

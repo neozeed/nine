@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-int strlen (const char *string)
+size_t strlen (const char *string)
     {
     int i;
 

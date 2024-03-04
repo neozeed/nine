@@ -1,20 +1,14 @@
 /* sys/emx.h (emx/gcc) */
-/* this is from 0.8d?	*/
 
 /* Must be included before any other head files */
 
 #define FALSE 0
 #define TRUE  1
 
-#if !defined (NULL)
-#define NULL ((void *)0)
-#endif
-
 extern const int _nfiles;
 extern char ** _org_environ;
 
 #define _SIZE_T_DEFINED
-#define _SIZE_T
 typedef unsigned long size_t;
 
 struct _new_proc
@@ -64,18 +58,6 @@ struct _find
     char name[257];                 /* Big buffer for OS/2                  */
     };
 
-struct _fd_set;
-struct timeval;
-
-struct _select
-    {
-    int nfds;
-    struct _fd_set *readfds;
-    struct _fd_set *writefds;
-    struct _fd_set *exceptfds;
-    struct timeval *timeout;
-    };
-
 extern struct _dtd _start_time;
 
 #define _NFILES 40
@@ -93,7 +75,6 @@ extern struct _dtd _start_time;
 /*      O_CREAT     0x00000200 */
 /*      O_TRUNC     0x00000400 */
 /*      O_EXCL      0x00000800 */
-#define F_NPIPE     0x00001000
 
 /* stdio */
 
@@ -190,12 +171,10 @@ int __rename (const char *old_name, const char *new_name);
 int __rmdir (const char *name);
 void *__sbrk (int incr);
 void __scrsize (int *dst);
-int __select (struct _select *args);
 void (*__signal (int sig, void (*handler)()))(int sig);
 unsigned __sleep (unsigned sec);
 int __spawnve (struct _new_proc *np);
 int __swchar (int flag, int new);
-int __syserrno (void);
 int __uflags (int mask, int new);
 long __ulimit (int cmd, long new_limit);
 int __umask (int pmode);

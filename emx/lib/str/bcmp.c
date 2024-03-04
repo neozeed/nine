@@ -2,7 +2,7 @@
 
 #include <strings.h>
 
-int bcmp (const void *s1, const void *s2, int n)
+int bcmp (const void *s1, const void *s2, size_t n)
     {
     int i, d;
     

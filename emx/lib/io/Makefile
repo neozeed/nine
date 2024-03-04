@@ -1,13 +1,14 @@
-OBJ = access.o fclose.o _fill.o fputs.o fsync.o printf.o _seekhdr.o stdio.o vprintf.o \
-	chmod.o fdopen.o flushall.o fread.o ftell.o isatty.o puts.o setbuf.o tell.o vsprintf.o \
-	clearerr.o fflush.o _flush.o freopen.o ftruncat.o lseek.o read.o setbuffe.o _tmpbuf.o write.o \
-	close.o fgetc.o _fopen.o fscanf.o fwrite.o remove.o setmode.o tmpfile.o \
-	creat.o fgetchar.o fopen.o fseek.o gets.o mktemp.o rename.o setvbuf.o truncate.o \
-	eof.o fgetpos.o fprintf.o _fseekhd.o _input.o _newstre.o rewind.o sprintf.o ungetc.o \
-	_fbuf.o fgets.o fputc.o fsetpos.o ioctl.o open.o rmtmp.o sscanf.o unlink.o \
-	fcloseal.o fileleng.o fputchar.o fstat.o _iodata.o _output.o scanf.o stat.o vfprintf.o
+OBJ = access.o _fbuf.o fgets.o fputchar.o fstat.o isatty.o popen.o _seekhdr.o tell.o write.o \
+      binmode.o fcloseal.o fileleng.o fputs.o fsync.o _isterm.o printf.o setbuf.o _tmpbuf.o \
+      chmod.o fclose.o _fill.o fread.o ftell.o lseek.o puts.o setbuffe.o tmpfile.o \
+      clearerr.o fcntl.o flushall.o freopen.o ftruncat.o mktemp.o read.o setmode.o truncate.o \
+      close.o fdopen.o _flush.o fscanf.o fwrite.o _newstre.o remove.o setvbuf.o ungetc.o \
+      creat.o fflush.o _fopen.o fseek.o gets.o open.o rename.o sprintf.o unlink.o \
+      _crlf.o fgetc.o fopen.o _fseekhd.o _input.o _output.o rewind.o sscanf.o vfprintf.o \
+      dup.o fgetchar.o fprintf.o _fsetmod.o ioctl.o pclose.o rmtmp.o stat.o vprintf.o \
+      eof.o fgetpos.o fputc.o fsetpos.o _iodata.o pipe.o scanf.o stdio.o vsprintf.o
 
-CFLAGS = -fno-builtin -nostdinc -I../../include
+CFLAGS = -O0 -ggdb3 -fno-builtin -fno-stack-protector -nostdinc -I../../include
 
 CC = i586-linux-gcc
 

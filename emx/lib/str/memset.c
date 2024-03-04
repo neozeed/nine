@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-void *memset (void *s, int c, int n)
+void *memset (void *s, int c, size_t n)
     {
     int i;
 

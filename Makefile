@@ -1,13 +1,16 @@
 # -DLX_LEGACY
-#ARCH = -m64 
+ARCH = -m64 
 DEFINES = -DDEBUG -DHAVE_NCURSESW_NCURSES_H -D_FILE_OFFSET_BITS=64
 CFLAGS =  -fPIC -O0 -std=c99 -Wall -ggdb3 -Iinclude 
 #CFLAGS =  -O0 -ggdb3 -Wall -std=gnu99 -pedantic -nostdlib -fomit-frame-pointer -fno-stack-protector -fno-unwind-tables \
 #	  -fno-asynchronous-unwind-tables -fno-unroll-loops -fmerge-all-constants -fno-ident -ffunction-sections \
 #	  -fdata-sections -Iinclude
 
-CC = i586-linux-gcc
-#CC = gcc $(ARCH)
+#CC = i586-linux-gcc
+CC = gcc $(ARCH)
+
+#LIBS = emx/lib/io/io.a emx/lib/misc/misc.a emx/lib/str/str.a
+LIBS = emx/lib/libc.a
 
 DLLDIR = dll/
 
@@ -21,12 +24,13 @@ hello32: $(DLLS)
 	$(CC) -c start32.c
 	$(CC) -c -fno-builtin -ggdb3 -O0 -Iinclude hello.c
 #	i586-linux-ld --as-needed -dynamic-linker /lib/ld-linux.so.2  -pie -m elf_i386 -rpath dll start32.o hello.o dll/msg.so dll/lib2ine.so -o hello32
-	i586-linux-ld --as-needed -dynamic-linker /lib/ld-linux.so.2  -pie -m elf_i386 -rpath dll rt0/00_start.o rt0/syscall.o hello.o rt0/_exit.o  dll/msg.so dll/lib2ine.so -o hello32
+	i586-linux-ld --as-needed -dynamic-linker /lib/ld-linux.so.2  -pie -m elf_i386 -rpath dll rt0/00_start.o rt0/syscall.o hello.o rt0/_exit.o  $(LIBS) dll/msg.so dll/lib2ine.so -o hello32
 
 hello64: $(DLLS)
 	$(CC) -c start.c
-	$(CC) -c -fno-builtin -Iinclude hello.c
-	ld --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie start.o hello.o -o hello64 \
+	$(CC) -c -fno-builtin -ggdb3 -O0 -Iinclude hello.c
+	ld --nostdlib  -verbose -dynamic-linker /lib64/ld-linux-x86-64.so.2 start.o hello.o -o hello64 -rpath dll emx/lib/libc.a  missinc.o dll/msg.so dll/lib2ine.so
+#	ld --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie start.o hello.o -o hello64 \
 	-rpath dll dll/msg.so dll/lib2ine.so
 #	$(CC) -o hello hello.o -Wl,-rpath,dll dll/msg.so  dll/lib2ine.so
 

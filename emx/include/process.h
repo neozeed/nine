@@ -1,5 +1,8 @@
 /* process.h (emx/gcc) */
 
+#if !defined (_PROCESS_H)
+#define _PROCESS_H
+
 #if !defined (P_WAIT)
 #define P_WAIT    0
 #define P_NOWAIT  1
@@ -30,3 +33,5 @@ int spawnvp (int mode, const char *name, const char * const *argv);
 int spawnvpe (int mode, const char *name, const char * const *argv, const char * const *envp);
 int system (const char *name);
 int wait (int *term);
+
+#endif /* !defined (_PROCESS_H) */

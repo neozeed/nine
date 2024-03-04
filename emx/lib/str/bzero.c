@@ -2,7 +2,7 @@
 
 #include <strings.h>
 
-void bzero (void *s, int n)
+void bzero (void *s, size_t n)
     {
     int i;
 

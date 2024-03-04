@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-int memcmp (const void *s1, const void *s2, int n)
+int memcmp (const void *s1, const void *s2, size_t n)
     {
     int i, d;
     

@@ -12,6 +12,8 @@
         );                         \
     }
 
+int errno;
+
 void _start() {
     __asm__ __volatile__ (
          "pop %%rbp;" // C compiler will push rbp

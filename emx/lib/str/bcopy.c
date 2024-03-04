@@ -2,7 +2,7 @@
 
 #include <strings.h>
 
-void bcopy (const void *s1, void *s2, int n)
+void bcopy (const void *s1, void *s2, size_t n)
     {
     int i;
 
