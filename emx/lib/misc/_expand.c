@@ -3,15 +3,15 @@
 #include <sys/emx.h>
 #include <stdlib.h>
 
-void *_expand (void *mem, size_t size)
+void *_expand (void *mem, size_t new_size)
     {
     size_t in_use, len, xlen;
     size_t *base, *block;
     void *p;
 
-    if (size > (size_t)(-16))
+    if (new_size > (size_t)(-16))
         return (NULL);
-    size = (size+1) & ~1;
+    new_size = (new_size+1) & ~1;
     base = mem;
     --base;
     in_use = *base;
@@ -28,12 +28,12 @@ restart:
             break;              /* yes -> end of contiguous area */
         len += sizeof (size_t) + (xlen & ~1);
         }
-    if (len >= size)
+    if (len >= new_size)
         goto success;
     *base = (len & ~1) | (in_use & 1);
     if (*block != END_OF_HEAP)
         return (NULL);
-    xlen = (size-len + sizeof (size_t) + 0xfff) & ~0xfff;
+    xlen = (new_size-len + sizeof (size_t) + 0xfff) & ~0xfff;
     p = sbrk (xlen);
     if (p == (void *)(-1))
         return (NULL);
@@ -45,11 +45,11 @@ restart:
     goto restart;
 
 success:
-    if (len - size > sizeof (size_t))
+    if (len - new_size > sizeof (size_t))
         {
-        block = (size_t *)((char *)base + sizeof (size_t) + size);
-        *block = (len - size - sizeof (size_t)) | 1;
-        len = size;
+        block = (size_t *)((char *)base + sizeof (size_t) + new_size);
+        *block = (len - new_size - sizeof (size_t)) | 1;
+        len = new_size;
         }
     *base = (len & ~1) | (in_use & 1);
     ++base;

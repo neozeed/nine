@@ -13,8 +13,10 @@ void _startup (void)
     {
     int i, j;
 
+#if 0
     if (_emx_vcmp < 0x302e3863)             /* 0.8c */
         (void)__write (2, _version_warning, strlen (_version_warning));
+#endif
     __ftime (&_start_time);
     for (i = 0; i < _nfiles; ++i)
         {

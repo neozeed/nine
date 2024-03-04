@@ -1,5 +1,5 @@
 OBJ = access.o _fbuf.o fgets.o fputchar.o fstat.o isatty.o popen.o _seekhdr.o tell.o write.o \
-      binmode.o fcloseal.o fileleng.o fputs.o fsync.o _isterm.o printf.o setbuf.o _tmpbuf.o \
+      fcloseal.o fileleng.o fputs.o fsync.o _isterm.o printf.o setbuf.o _tmpbuf.o \
       chmod.o fclose.o _fill.o fread.o ftell.o lseek.o puts.o setbuffe.o tmpfile.o \
       clearerr.o fcntl.o flushall.o freopen.o ftruncat.o mktemp.o read.o setmode.o truncate.o \
       close.o fdopen.o _flush.o fscanf.o fwrite.o _newstre.o remove.o setvbuf.o ungetc.o \

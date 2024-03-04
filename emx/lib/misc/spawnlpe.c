@@ -4,7 +4,7 @@
 #include <process.h>
 #include <stdarg.h>
 
-int spawnle (int mode, const char *name, const char *arg0, ...)
+int spawnlpe (int mode, const char *name, const char *arg0, ...)
     {
     va_list arg_ptr;
     const char * const *env_ptr;
