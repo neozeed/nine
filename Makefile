@@ -13,8 +13,11 @@ all: $(DLLS) hello testtls
 	./hello
 
 hello: $(DLLS)
+	$(CC) -c start.c
 	$(CC) -c -Iinclude hello.c
-	$(CC) -o hello hello.o -Wl,-rpath,dll dll/msg.so  dll/lib2ine.so
+	ld --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie start.o hello.o -o hello \
+	-rpath dll dll/msg.so dll/lib2ine.so
+#	$(CC) -o hello hello.o -Wl,-rpath,dll dll/msg.so  dll/lib2ine.so
 
 testtls: $(DLLS)
 	$(CC) -c -Iinclude testtls.c
@@ -53,11 +56,11 @@ $(DLLDIR)quecalls.so: quecalls/quecalls.o
 
 
 clean:
-	rm $(DLLS)
-	rm hello hello.o
-	rm testtls testtls.o
-	rm doscalls/doscalls.o lib2ine/lib2ine.o msg/msg.o
-	rm nls/nls.o quecalls/quecalls.o
+	@rm -f $(DLLS)
+	@rm -f hello hello.o start.o
+	@rm -f testtls testtls.o
+	@rm -f doscalls/doscalls.o lib2ine/lib2ine.o msg/msg.o
+	@rm -f nls/nls.o quecalls/quecalls.o
 
 #gcc -DDEBUG -DHAVE_NCURSESW_NCURSES_H -D_2ine_EXPORTS -D_FILE_OFFSET_BITS=64 -fPIC -O0 -std=c99 -Wall -ggdb3 -m32 -MD -MT -D_2ine_EXPORTS -c ../lib2ine.c
 #gcc -m32 -fPIC -shared -Wl,-soname,lib2ine.so -o lib2ine.so -Wl,-rpath,/home/jsteve/src/2ine lib2ine.o -lpthread
