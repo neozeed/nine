@@ -14,6 +14,7 @@
 #include <time.h>
 #include <dirent.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -23,6 +24,26 @@
 #include <sys/stat.h>
 
 #include "doscalls-lx.h"
+
+#define CLOCK_REALTIME 23253
+#define CLOCK_MONOTONIC_RAW 23253
+#define O_CLOEXEC      02000000        /* set close_on_exec */
+#define        EOWNERDEAD      130     /* Owner died */
+int clock_gettime(int clk_id, struct timespec *tp) {
+    if (clk_id == CLOCK_REALTIME) {
+        // Get the current time in seconds since epoch (you can adjust this as needed)
+        time_t curTime = time(NULL);
+
+        // Fill the timespec structure
+        tp->tv_sec = curTime;
+        tp->tv_nsec = 0;
+
+        return 0; // Return success
+    } else {
+        // Unsupported clock ID
+        return -1;
+    }
+}
 
 static pthread_mutex_t GMutexDosCalls;
 static pthread_mutex_t GMutexDosBeep;
@@ -478,7 +499,7 @@ APIRET DosCreateMutexSem(PSZ name, PHMTX phmtx, ULONG attr, BOOL32 state)
     pthread_mutexattr_t muxattr;
     pthread_mutexattr_init(&muxattr);
     pthread_mutexattr_settype(&muxattr, PTHREAD_MUTEX_RECURSIVE);
-    pthread_mutexattr_setrobust(&muxattr, PTHREAD_MUTEX_ROBUST);
+    //pthread_mutexattr_setrobust(&muxattr, PTHREAD_MUTEX_ROBUST);
 
     const int rc = pthread_mutex_init(mtx, &muxattr);
     pthread_mutexattr_destroy(&muxattr);
@@ -1500,11 +1521,11 @@ static char **calcArgv(const char *os2args, APIRET *err)
     return retval;
 } // calcArgv
 
-static void setProcessResultCode(PRESULTCODES pRes, const int status)
+static void setProcessResultCode(PRESULTCODES pRes, int status)
 {
+	int rc;
     if (!pRes)
         return;
-
     if (WIFEXITED(status)) {
         // !!! FIXME: OS/2 processes exit with a ULONG, and returns bottom 16-bits of it for codeResult. Unix only gives you 8, though!
         pRes->codeTerminate = TC_EXIT;

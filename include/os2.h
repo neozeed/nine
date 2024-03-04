@@ -24,7 +24,7 @@
 #include "nls.h"
 #include "sesmgr.h"
 #include "pmgpi.h"
-#include "tcpip32.h"
+//#include "tcpip32.h"
 
 #endif
 

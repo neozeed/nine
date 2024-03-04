@@ -176,10 +176,12 @@ static void initPib(void)
     //  want lx_loader to copy this to an alloc'd segment later so we
     //  definitely have an tileable address below 512mb.)
     char *env = NULL;
+#if LX_LEGACY
     if (posix_memalign((void **) &env, 0x10000, 0x10000) != 0) {
         fprintf(stderr, "Out of memory\n");
         abort();
     } // if
+#endif
 
     const char *libpath = NULL;
     char *ptr = env;
