@@ -3,7 +3,7 @@ OBJ = bcmp.o memccpy.o memmove.o strchr.o strdup.o strlwr.o strnicmp.o strrev.o 
       bzero.o memcpy.o rindex.o strcpy.o stricmp.o strncmp.o strpbrk.o strspn.o \
       index.o memicmp.o strcat.o strcspn.o strlen.o strncpy.o strrchr.o strstr.o
 
-CFLAGS = -nostdinc -I../../include
+CFLAGS = -fno-builtin -nostdinc -I../../include
 
 CC = i586-linux-gcc
 

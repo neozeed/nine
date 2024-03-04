@@ -7,7 +7,7 @@ OBJ = access.o fclose.o _fill.o fputs.o fsync.o printf.o _seekhdr.o stdio.o vpri
 	_fbuf.o fgets.o fputc.o fsetpos.o ioctl.o open.o rmtmp.o sscanf.o unlink.o \
 	fcloseal.o fileleng.o fputchar.o fstat.o _iodata.o _output.o scanf.o stat.o vfprintf.o
 
-CFLAGS = -nostdinc -I../../include
+CFLAGS = -fno-builtin -nostdinc -I../../include
 
 CC = i586-linux-gcc
 

@@ -6,7 +6,7 @@ OBJ = abort.o atol.o _defext.o getcwd.o itoa.o _path.o qsort.o spawnv.o syserr.o
 	atof.o ctime.o _expand.o gmtime.o mktime.o putenv.o _searche.o strtod.o ultoa.o\
 	atoi.o ctype.o free.o heapchk.o _msize.o pwd.o sleep.o strtol.o utimes.o
 
-CFLAGS = -nostdinc -I../../include
+CFLAGS = -fno-builtin -nostdinc -I../../include
 
 CC = i586-linux-gcc
 

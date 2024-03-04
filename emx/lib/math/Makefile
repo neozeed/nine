@@ -3,7 +3,7 @@
 #
 GAS=i586-linux-as
 GCPP=i586-linux-cpp
-GCC=i586-linux-gcc -nostdinc -O -I../../include -DUSE_FLOATING_POINT
+GCC=i586-linux-gcc -fno-builtin -nostdinc -O -I../../include -DUSE_FLOATING_POINT
 AR=i586-linux-ar
 I=../../include/
 E=$(I)sys/emx.h
